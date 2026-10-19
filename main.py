@@ -1,18 +1,17 @@
 import login
+import menus
 import signup
+import systemMenu
 
 
 def main_menu():
     while True:
-        print("\nEnter the number of your desired action.")
-        print("[1] Login")
-        print("[2] Signup")
-        print("[3] Quit")
-
-        choice = input("Enter your choice: ").strip()
+        choice = menus.main_menu_choice()
 
         if choice == "1":
-            login.handle_login()
+            username = login.handle_login()
+            if username:
+                systemMenu.display_menu(username)
         elif choice == "2":
             signup.handle_signup()
         elif choice == "3":

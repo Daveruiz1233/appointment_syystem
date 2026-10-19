@@ -1,6 +1,7 @@
 import json
 
 import add_appointment
+import menus
 
 
 APPOINTMENTS_FILE = "appointments.json"
@@ -34,9 +35,6 @@ def show_user_appointments(username):
         print("\nYou have no appointments.")
         return appointments
 
-    print("\nYour appointments:")
-    for number, appointment in enumerate(appointments, start=1):
-        print(f"{number}. {appointment['date']}")
     return appointments
 
 
@@ -62,7 +60,7 @@ def change_appointment(username, selected_appointment):
         print("No dates are available.")
         return
 
-    new_date = add_appointment.show_dates_paged(available_dates)
+    new_date = menus.select_date(available_dates, add_appointment.PAGE_SIZE)
     if new_date is None:
         return
 
@@ -81,12 +79,10 @@ def appointments_menu(username):
     while True:
         appointments = show_user_appointments(username)
         if not appointments:
-            input("Press Enter to return to the system menu.")
+            menus.return_to_system_menu()
             return
 
-        choice = input(
-            "\nSelect an appointment number, or enter q to return: "
-        ).strip().lower()
+        choice = menus.select_appointment(appointments)
         if choice == "q":
             return
         if not choice.isdigit() or not 1 <= int(choice) <= len(appointments):
@@ -94,12 +90,7 @@ def appointments_menu(username):
             continue
 
         selected_appointment = appointments[int(choice) - 1]
-        action = input(
-            "[1] Cancel appointment\n"
-            "[2] Change date\n"
-            "[3] Back\n"
-            "Choose an action: "
-        ).strip()
+        action = menus.appointment_action()
 
         if action == "1":
             all_appointments = load_json(APPOINTMENTS_FILE)

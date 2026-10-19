@@ -1,5 +1,5 @@
 import json
-import main
+import menus
 
 def handle_signup():
 
@@ -7,7 +7,7 @@ def handle_signup():
         loaded_users = json.load(file)
 
     while True:
-        username, password = signup_menu()
+        username, password = menus.signup_credentials()
 
         if not username or not password:
             print("Username and password cannot be empty.")
@@ -21,8 +21,3 @@ def handle_signup():
         with open("users.json", "w") as file:
             json.dump(loaded_users, file, indent=4)
         return True
-
-def signup_menu():
-    username = input("Choose a username: ").strip()
-    password = input("Choose a password: ").strip()
-    return username, password

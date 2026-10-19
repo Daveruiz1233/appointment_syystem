@@ -1,14 +1,11 @@
 import add_appointment
+import menus
 import view_appointments
 
 
 def display_menu(username):
     while True:
-        print("\nWelcome to the appointment system menu")
-        print("[1] add an appointment")
-        print("[2] view appointments")
-        print("[3] Logout")
-        choice = input("Enter your choice: ").strip()
+        choice = menus.system_menu_choice()
 
         if choice == "1":
             add_appointment.add_menu(username)
